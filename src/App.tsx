@@ -17,9 +17,11 @@ function App() {
     }
   };
 
+  const pieOptions = ['Apple', 'Cherry', 'Pumpkin', 'Lemon meringue', 'No'];
+
   return (
     <main className='App mt-10'>
-      <MyList saveList={handleSubmit} initialList={savedItems} />
+      <MyList saveList={handleSubmit} selected={savedItems} options={pieOptions}/>
     </main>
   );
 }

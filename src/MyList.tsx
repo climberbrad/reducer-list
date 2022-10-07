@@ -16,15 +16,14 @@ const cloudSVG = (
   </svg>
 );
 
-const pieOptions = ['Apple', 'Cherry', 'Pumpkin', 'Lemon meringue', 'No'];
-
 interface Props {
   saveList: (items: string[]) => void,
-  initialList: string[]
+  selected: string[],
+  options: string[],
 }
 
-const MyList = ({ saveList, initialList }: Props): JSX.Element => {
-  const [state, dispatch] = ListReducer(initialList);
+const MyList = ({ saveList, selected, options }: Props): JSX.Element => {
+  const [state, dispatch] = ListReducer(selected);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,7 +32,7 @@ const MyList = ({ saveList, initialList }: Props): JSX.Element => {
       await saveList(state.pieList);
       dispatch({ type: 'success' });
     } catch (error) {
-      dispatch({ type: 'error', pieList: initialList });
+      dispatch({ type: 'error', pieList: selected });
     }
   };
 
@@ -61,7 +60,7 @@ const MyList = ({ saveList, initialList }: Props): JSX.Element => {
             <span className='text-xl text-gray-700 font-semibold pl-2'>Reducer checklist</span>
           </div>
           <div className='p-2 mx-20 my-4'>
-            {pieOptions.map(listPie)}
+            {options.map(listPie)}
             <div className='flex justify-end mt-8'>
               <button type={'submit'} disabled={state.saved || (!state.saved && state.isLoading)}
                       className={buttonCss(state)}>{state.isLoading ? 'Saving...' : 'Save'}</button>
