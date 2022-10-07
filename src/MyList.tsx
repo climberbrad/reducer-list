@@ -24,7 +24,7 @@ interface Props {
 }
 
 const MyList = ({ saveList, initialList }: Props): JSX.Element => {
-  const [state, dispatch] = ListReducer({ saved: true, isLoading: false, error: false, pieList: initialList });
+  const [state, dispatch] = ListReducer(initialList);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

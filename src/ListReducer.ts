@@ -14,7 +14,7 @@ export interface PieState {
 }
 
 
-const ListReducer = (initialState: PieState) => {
+const ListReducer = (initialList: string[]) => {
 
   const reducer = (state: PieState, action: ActionEvent): PieState => {
     switch (action.type) {
@@ -22,7 +22,7 @@ const ListReducer = (initialState: PieState) => {
         const list = state.pieList.includes(action.pie)
           ? state.pieList.filter((flavor) => flavor !== action.pie)
           : [...state.pieList, action.pie];
-        const isSaved = JSON.stringify(initialState.pieList) === JSON.stringify(list);
+        const isSaved = JSON.stringify(initialList) === JSON.stringify(list);
 
         return { ...state, saved: isSaved, pieList: list };
       case 'submit':
@@ -35,7 +35,7 @@ const ListReducer = (initialState: PieState) => {
         return state;
     }
   };
-  return useReducer(reducer, initialState);
+  return useReducer(reducer, { saved: true, isLoading: false, error: false, pieList: initialList });
 };
 
 export default ListReducer;
