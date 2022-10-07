@@ -74,9 +74,9 @@ function App() {
       <form onSubmit={handleSubmit}>
           <div className="container mx-auto bg-blue-300 rounded-xl shadow border pt-8 w-1/4">
               <div className='flex justify-center'>
-                  <span className='mt-0.5'>{cloudSVG}</span>
+                  <span className='mt-0.5 text-blue-700'>{cloudSVG}</span>
                   <span className="text-xl text-gray-700 font-semibold pl-2">
-                    Reducer Check List!
+                    Reducer checklist
                   </span>
               </div>
               <div className='p-2 mx-20 my-4'>
