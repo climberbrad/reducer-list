@@ -33,7 +33,7 @@ const MyList = ({ saveList, initialList }: Props): JSX.Element => {
       await saveList(state.pieList);
       dispatch({ type: 'success' });
     } catch (error) {
-      dispatch({ type: 'error' , pieList: initialList});
+      dispatch({ type: 'error', pieList: initialList });
     }
   };
 
@@ -48,7 +48,8 @@ const MyList = ({ saveList, initialList }: Props): JSX.Element => {
   return (
     <>
       {state.error && (
-        <div className="flex justify-center container mt-4 mx-auto bg-red-300 text-semibold rounded-xl shadow border py-4 mb-2 w-1/4">
+        <div
+          className='flex justify-center container mt-4 mx-auto bg-red-300 text-semibold rounded-xl shadow border py-4 mb-2 w-1/4'>
           <div className={'mr-2'}>Error:</div>
           <div className='font-semibold text-sm mt-0.5'>Unable to save list.</div>
         </div>

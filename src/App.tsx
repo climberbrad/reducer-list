@@ -11,15 +11,15 @@ function App() {
   const handleSubmit = async (items: string[]) => {
     try {
       await saveList(items);
-      setSavedItems(items)
+      setSavedItems(items);
     } catch (error) {
-      throw new Error('Error saving list.')
+      throw new Error('Error saving list.');
     }
   };
 
   return (
     <main className='App mt-10'>
-      <MyList  saveList={handleSubmit} initialList={savedItems}/>
+      <MyList saveList={handleSubmit} initialList={savedItems} />
     </main>
   );
 }

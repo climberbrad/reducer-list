@@ -28,7 +28,7 @@ const ListReducer = (initialList: string[]) => {
       case 'submit':
         return { ...state, isLoading: true, error: false };
       case 'success':
-        return { ...state, saved: true, isLoading: false, error: false};
+        return { ...state, saved: true, isLoading: false, error: false };
       case 'error':
         return { ...state, saved: false, isLoading: false, error: true, pieList: action.pieList };
       default:
