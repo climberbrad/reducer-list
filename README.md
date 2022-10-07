@@ -12,6 +12,11 @@ as well as the items in the checklist.
 * stores the loading state
 * stores the error state
 * stores the list items
+
+## Intentional Error State
+If you try and save a state with zero items it will create an error. This is by design
+just to simulate an error state.
+
 ## Branches
 The main branch uses the standard approach to `useReducer` storing the entire state in the reducer.
 The `goal-1` branch stores only the changes in the `state` and lets the component diff the state
