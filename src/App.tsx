@@ -2,26 +2,37 @@ import React, { useState } from 'react';
 import './App.css';
 import MyList from './MyList';
 import { saveList } from './Utils';
+import { List } from 'postcss/lib/list';
 
+export interface ListItem {
+  name: string;
+  selected: boolean;
+};
+
+const pieList: ListItem[] = [
+  { name: 'Apple', selected: false },
+  { name: 'Cherry', selected: false },
+  { name: 'Pumpkin', selected: false },
+  { name: 'Lemon meringue', selected: false },
+  { name: 'No', selected: false },
+];
 
 function App() {
   // simulates a backend DB
-  const [savedItems, setSavedItems] = useState<string[]>([]);
+  const [savedItems, setSavedItems] = useState<ListItem[]>(pieList);
 
-  const handleSubmit = async (items: string[]) => {
+  const handleSubmit = async (items: ListItem[]) => {
     try {
-      await saveList(items);
+      await saveList(items.map((item) => item.name));
       setSavedItems(items);
     } catch (error) {
       throw new Error('Error saving list.');
     }
   };
 
-  const pieOptions = ['Apple', 'Cherry', 'Pumpkin', 'Lemon meringue', 'No'];
-
   return (
     <main className='App mt-10'>
-      <MyList saveList={handleSubmit} selected={savedItems} options={pieOptions}/>
+      <MyList saveList={handleSubmit} listItems={savedItems} />
     </main>
   );
 }

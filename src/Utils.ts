@@ -1,7 +1,7 @@
-export async function saveList(pies: string[] ) {
+export async function saveList(items: string[] ) {
     return new Promise<void>((resolve, reject) => {
         setTimeout(() => {
-            if (pies.length > 0) {
+            if (items.length > 0) {
                 resolve();
             } else {
                 reject();

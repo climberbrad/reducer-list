@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import ListReducer, { PieState } from './ListReducer';
+import { ListItem } from './App';
 
 export const buttonCss = (state: PieState) => {
   return state.saved || (!state.saved && state.isLoading)
@@ -17,30 +18,29 @@ const listSVG = (
 );
 
 interface Props {
-  saveList: (items: string[]) => void,
-  selected: string[],
-  options: string[],
+  saveList: (items: ListItem[]) => void,
+  listItems: ListItem[],
 }
 
-const MyList = ({ saveList, selected, options }: Props): JSX.Element => {
-  const [state, dispatch] = ListReducer(selected);
+const MyList = ({ saveList, listItems }: Props): JSX.Element => {
+  const [state, dispatch] = ListReducer(listItems);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch({ type: 'submit' });
     try {
-      await saveList(state.pieList);
+      await saveList(state.listItems);
       dispatch({ type: 'success' });
     } catch (error) {
-      dispatch({ type: 'error', pieList: selected });
+      dispatch({ type: 'error', items: listItems });
     }
   };
 
-  const listPie = (pie: string): JSX.Element => (
-    <div className='flex justify-between py-1' onClick={() =>
-      dispatch({ type: 'click', pie: pie })}>
-      <p className='text-gray-500 text-md pr-2 font-semibold whitespace-nowrap hover:opacity-50 hover:text-white'>{pie} pie</p>
-      <input value='boo' type='checkbox' checked={state.pieList.includes(pie)} className='h-6 w-4 rounded focus:outline-none' />
+  const listItem = (item: ListItem): JSX.Element => (
+    <div className='flex justify-between py-1' onClick={() => dispatch({ type: 'click', item: item })}>
+      <p className='text-gray-500 text-md pr-2 font-semibold whitespace-nowrap hover:opacity-50 hover:text-white'>{item.name} pie</p>
+      <input value='boo' type='checkbox' checked={item.selected}
+             className='h-6 w-4 rounded focus:outline-none' />
     </div>
   );
 
@@ -60,7 +60,7 @@ const MyList = ({ saveList, selected, options }: Props): JSX.Element => {
             <span className='text-xl text-gray-700 font-semibold pl-2'>Reducer checklist</span>
           </div>
           <div className='p-2 mx-20 my-4'>
-            {options.map(listPie)}
+            {state.listItems.map(listItem)}
             <div className='flex justify-end mt-8'>
               <button type={'submit'} disabled={state.saved || (!state.saved && state.isLoading)}
                       className={buttonCss(state)}>{state.isLoading ? 'Saving...' : 'Save'}</button>
