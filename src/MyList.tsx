@@ -62,7 +62,7 @@ const MyList = ({ saveList, listItems }: Props): JSX.Element => {
             {state.listItems.map(listItem)}
             <div className='flex justify-end mt-8'>
               <button type={'submit'} disabled={state.saved || (!state.saved && state.isLoading)}
-                      className={buttonCss(state)}>{state.isLoading ? 'Saving...' : 'Save'}</button>
+                      className={buttonCss(state)}>{state.isLoading ? 'Saving...' : state.saved ? 'Saved' : 'Save'}</button>
             </div>
           </div>
         </div>
