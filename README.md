@@ -1,4 +1,9 @@
 # Reducer Checklist
+This is a sample exercise to leverage `useReducer` as a way to hold state for a simple component.
+The alternative is `useState` so the objective is to see the differences and how `useReducer` can
+simplify the logic and testability. We use a simple list of pies which can be checked/unchecked
+and saved/unsaved/loading as well as an error/noError state in this simple form. The button should
+indicate which state we are in (saved|unsaved|saving).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -23,4 +28,4 @@ The `goal-1` branch stores only the changes in the `state` and lets the componen
 with `initialState` to render the display. This makes it easier to differentiate between what is
 unsaved changes and saved.
 
-![img.png](img.png)
+![img_2.png](img_2.png)
