@@ -1,7 +1,11 @@
-export async function saveList(items: string[] ) {
+import { ListItem } from './App';
+
+export async function saveList(items: ListItem[] ) {
+
+    // throw an error if nothing is selected
     return new Promise<void>((resolve, reject) => {
         setTimeout(() => {
-            if (items.length > 0) {
+            if (items.filter((item) => item.selected).length > 0) {
                 resolve();
             } else {
                 reject();

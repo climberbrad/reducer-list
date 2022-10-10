@@ -23,7 +23,7 @@ function App() {
 
   const handleSubmit = async (items: ListItem[]) => {
     try {
-      await saveList(items.map((item) => item.name));
+      await saveList(items);
       setSavedItems(items);
     } catch (error) {
       throw new Error('Error saving list.');
