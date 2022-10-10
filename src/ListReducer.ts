@@ -1,5 +1,9 @@
 import { useReducer } from 'react';
-import { ListItem } from './App';
+
+export interface ListItem {
+  name: string;
+  selected: boolean;
+};
 
 type ActionEvent =
   | { type: 'click'; item: ListItem; }
@@ -7,7 +11,7 @@ type ActionEvent =
   | { type: 'success' }
   | { type: 'error', items: ListItem[] }
 
-export interface PieState {
+export interface LisState {
   saved: boolean;
   isLoading: boolean;
   listItems: ListItem[];
@@ -17,7 +21,7 @@ export interface PieState {
 
 const ListReducer = (initialList: ListItem[]) => {
 
-  const reducer = (state: PieState, action: ActionEvent): PieState => {
+  const reducer = (state: LisState, action: ActionEvent): LisState => {
     switch (action.type) {
       case 'click':
         const index = state.listItems.indexOf(action.item);

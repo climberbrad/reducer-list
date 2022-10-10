@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
-import ListReducer, { PieState } from './ListReducer';
-import { ListItem } from './App';
+import ListReducer, { LisState, ListItem } from './ListReducer';
 
-export const buttonCss = (state: PieState) => {
+export const buttonCss = (state: LisState) => {
   return state.saved || (!state.saved && state.isLoading)
     ? 'bg-gray-500 opacity-75 w-full py-1 border border-gray-100 rounded text-white font-semibold'
     : 'bg-sky-700 w-full py-1 border border-gray-100 rounded text-white hover:opacity-75 hover:bg-gray-400 hover:text-black font-semibold';

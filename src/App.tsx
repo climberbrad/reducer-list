@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import MyList from './MyList';
 import { saveList } from './Utils';
-import { List } from 'postcss/lib/list';
-
-export interface ListItem {
-  name: string;
-  selected: boolean;
-};
+import { ListItem } from './ListReducer';
 
 const pieList: ListItem[] = [
   { name: 'Apple', selected: false },

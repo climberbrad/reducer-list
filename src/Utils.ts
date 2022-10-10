@@ -1,4 +1,4 @@
-import { ListItem } from './App';
+import { ListItem } from './ListReducer';
 
 export async function saveList(items: ListItem[] ) {
 
