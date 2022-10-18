@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import ListReducer, { LisState, ListItem } from './ListReducer';
+import { ListItem } from './ListReducer';
 
-export const buttonCss = (state: LisState) => {
-  return state.saved || (!state.saved && state.isLoading)
+export const buttonCss = (saved: boolean, isLoading: boolean) => {
+  return saved || (!saved && isLoading)
     ? 'bg-gray-500 opacity-75 w-full py-1 border border-gray-100 rounded text-white font-semibold'
     : 'bg-sky-700 w-full py-1 border border-gray-100 rounded text-white hover:opacity-75 hover:bg-gray-400 hover:text-black font-semibold';
 };
@@ -22,22 +22,35 @@ interface Props {
 }
 
 const MyList = ({ saveList, listItems }: Props): JSX.Element => {
-  const [state, dispatch] = ListReducer(listItems);
+  const [pies, setPies] = useState<ListItem[]>(listItems);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorTxt, setErrorTxt] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [saved, setSaved] = useState<boolean>(true);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch({ type: 'submit' });
+    setIsLoading(true);
     try {
-      await saveList(state.listItems);
-      dispatch({ type: 'success' });
+      await saveList(pies);
+      setSaved(true);
     } catch (error) {
-      dispatch({ type: 'error', items: listItems });
+      setIsError(true);
+      setErrorTxt('Unable to save pie list.');
     }
+    setIsLoading(false);
   };
 
-  const listItem = (item: ListItem): JSX.Element => (
-    <div className='flex justify-between py-1' onClick={() => dispatch({ type: 'click', item: item })}>
-      <p className='text-gray-500 text-md pr-2 font-semibold whitespace-nowrap hover:opacity-50 hover:text-white'>{item.name} pie</p>
+  const handleClick = (listItem: ListItem, index: number) => {
+    const copy = [...pies];
+    copy[index] = { ...listItem, selected: !listItem.selected };
+    setPies(copy);
+  };
+
+  const listItem = (item: ListItem, index: number): JSX.Element => (
+    <div className='flex justify-between py-1' onClick={() => handleClick(item, index)}>
+      <p
+        className='text-gray-500 text-md pr-2 font-semibold whitespace-nowrap hover:opacity-50 hover:text-white'>{item.name} pie</p>
       <input value='boo' type='checkbox' checked={item.selected}
              className='h-6 w-4 rounded focus:outline-none' />
     </div>
@@ -45,11 +58,11 @@ const MyList = ({ saveList, listItems }: Props): JSX.Element => {
 
   return (
     <>
-      {state.error && (
+      {isError && (
         <div
           className='flex justify-center container mt-4 mx-auto bg-red-300 text-semibold rounded-xl shadow border py-4 mb-2 w-1/4'>
           <div className={'mr-2'}>Error:</div>
-          <div className='font-semibold text-sm mt-0.5'>Unable to save list.</div>
+          <div className='font-semibold text-sm mt-0.5'>{errorTxt}</div>
         </div>
       )}
       <form onSubmit={handleSubmit}>
@@ -59,10 +72,10 @@ const MyList = ({ saveList, listItems }: Props): JSX.Element => {
             <span className='text-xl text-gray-700 font-semibold pl-2'>Reducer checklist</span>
           </div>
           <div className='p-2 mx-20 my-4'>
-            {state.listItems.map(listItem)}
+            {pies.map((pie, index) => listItem(pie, index))}
             <div className='flex justify-end mt-8'>
-              <button type={'submit'} disabled={state.saved || (!state.saved && state.isLoading)}
-                      className={buttonCss(state)}>{state.isLoading ? 'Saving...' : state.saved ? 'Saved' : 'Save'}</button>
+              <button type={'submit'} disabled={saved || (!saved && isLoading)}
+                      className={buttonCss(saved, isLoading)}>{isLoading ? 'Saving...' : saved ? 'Saved' : 'Save'}</button>
             </div>
           </div>
         </div>
