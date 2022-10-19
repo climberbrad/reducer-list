@@ -18,11 +18,11 @@ const listSVG = (
 
 interface Props {
   saveList: (items: ListItem[]) => void,
-  listItems: ListItem[],
+  persistedList: ListItem[],
 }
 
-const MyList = ({ saveList, listItems }: Props): JSX.Element => {
-  const [state, dispatch] = ListReducer(listItems);
+const MyList = ({ saveList, persistedList }: Props): JSX.Element => {
+  const [state, dispatch] = ListReducer(persistedList);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,7 +31,7 @@ const MyList = ({ saveList, listItems }: Props): JSX.Element => {
       await saveList(state.listItems);
       dispatch({ type: 'success' });
     } catch (error) {
-      dispatch({ type: 'error', items: listItems });
+      dispatch({ type: 'error', items: persistedList });
     }
   };
 
@@ -53,7 +53,7 @@ const MyList = ({ saveList, listItems }: Props): JSX.Element => {
         </div>
       )}
       <form onSubmit={handleSubmit}>
-        <div className='container mx-auto bg-blue-300 rounded-xl shadow border pt-8 w-1/4'>
+        <div className='container mx-auto bg-blue-300 rounded-xl shadow border pt-8 w-1/4 drop-shadow-xl'>
           <div className='flex justify-center'>
             <span className='mt-0.5 text-white'>{listSVG}</span>
             <span className='text-xl text-gray-700 font-semibold pl-2'>Reducer checklist</span>

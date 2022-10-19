@@ -27,7 +27,7 @@ function App() {
 
   return (
     <main className='App mt-10'>
-      <MyList saveList={handleSubmit} listItems={savedItems} />
+      <MyList saveList={handleSubmit} persistedList={savedItems} />
     </main>
   );
 }
